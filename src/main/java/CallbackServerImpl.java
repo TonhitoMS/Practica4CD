@@ -139,7 +139,7 @@ public class CallbackServerImpl extends UnicastRemoteObject
                     Logger.getLogger(CallbackServerImpl.class.getName()).log(Level.SEVERE, null, ex);
                 }
             }
-        }, 0, 20*1000);
+        }, 0, 60*1000);
         
         this.taboa = result;
    }
