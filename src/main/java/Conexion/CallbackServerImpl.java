@@ -101,20 +101,21 @@ public class CallbackServerImpl extends UnicastRemoteObject
   
   private synchronized void consultarTaboa()  throws RemoteException{
       HashMap<String, Double> result = new HashMap();
-      Document doc = null;
-      try{
-        doc = Jsoup.connect("https://www.bolsamadrid.es/esp/aspx/Mercados/Precios.aspx?indice=ESI100000000&punto=indice").get();
-      }catch(IOException e){System.out.println("Excepción: " + e);}
-
-        Element taboa = doc.select("table[id*=Acciones]").get(0);
- 
-        CallbackServerImpl csi = this;
+      CallbackServerImpl csi = this;
         
         Timer timer = new Timer();
         
         timer.scheduleAtFixedRate(new TimerTask() {
             @Override
             public void run() {
+                Document doc = null;
+                try{
+                    doc = Jsoup.connect("https://www.bolsamadrid.es/esp/aspx/Mercados/Precios.aspx?indice=ESI100000000&punto=indice").get();
+                  }catch(IOException e){System.out.println("Excepción: " + e);}
+
+                Element taboa = doc.select("table[id*=Acciones]").get(0);
+
+                    
                 Elements filas = taboa.select("tr");
                 Elements cols;
                 NumberFormat format = NumberFormat.getInstance(Locale.FRANCE);
@@ -140,6 +141,7 @@ public class CallbackServerImpl extends UnicastRemoteObject
                 } catch (RemoteException ex) {
                     Logger.getLogger(CallbackServerImpl.class.getName()).log(Level.SEVERE, null, ex);
                 }
+                csi.taboa=result;
             }
         }, 0, 20*1000);
         

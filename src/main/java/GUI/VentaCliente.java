@@ -29,7 +29,6 @@ public class VentaCliente extends javax.swing.JFrame {
      */
     public VentaCliente() {
         initComponents();
-        start();
     }
 
     public JTextArea getTxtAlerta() {
@@ -148,14 +147,6 @@ public class VentaCliente extends javax.swing.JFrame {
                         .addGap(61, 61, 61)
                         .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(txtValor, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(204, 204, 204))
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(jLabel2)
-                                .addGap(239, 239, 239))
                             .addGroup(layout.createSequentialGroup()
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -172,7 +163,16 @@ public class VentaCliente extends javax.swing.JFrame {
                                                 .addGap(135, 135, 135))
                                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                                                 .addComponent(jLabel1)
-                                                .addGap(235, 235, 235)))))))))
+                                                .addGap(235, 235, 235))))))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                        .addComponent(txtValor, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(204, 204, 204))
+                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                        .addComponent(jLabel2)
+                                        .addGap(239, 239, 239)))))))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -203,6 +203,7 @@ public class VentaCliente extends javax.swing.JFrame {
         );
 
         pack();
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
     private void bntActActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bntActActionPerformed
@@ -217,6 +218,7 @@ public class VentaCliente extends javax.swing.JFrame {
         Collection<Double> valores = taboa.values();
         ArrayList<String> AEmpresas = new ArrayList(empresas);
         ArrayList<Double> AValores = new ArrayList(valores);
+        this.mostrarTaboa(AEmpresas, AValores);
         System.out.println("táboa actualizada");
     }//GEN-LAST:event_bntActActionPerformed
 
@@ -251,6 +253,9 @@ public class VentaCliente extends javax.swing.JFrame {
         } catch (RemoteException ex) {
             Logger.getLogger(VentaCliente.class.getName()).log(Level.SEVERE, null, ex);
         }
+        
+        txtEmpresa.setText("");
+        txtValor.setText("");
     }//GEN-LAST:event_btnCompraActionPerformed
 
     private void btnVentaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVentaActionPerformed
@@ -310,7 +315,11 @@ public class VentaCliente extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new VentaCliente().setVisible(true);
+                VentaCliente vc = new VentaCliente();
+                vc.setVisible(true);
+                VRexistro vx = new VRexistro(vc, true, vc);
+                vx.setVisible(true);
+                
             }
         });
     }
@@ -342,20 +351,9 @@ public class VentaCliente extends javax.swing.JFrame {
         }
     }
     
-    private void start(){
+    public void start(String hostNum, String portNum){
         try {
-      int RMIPort;         
-      String hostName;
-      InputStreamReader is = 
-        new InputStreamReader(System.in);
-      BufferedReader br = new BufferedReader(is);
-      System.out.println(
-        "Enter the RMIRegistry host namer:");
-      hostName = br.readLine();
-      System.out.println(
-        "Enter the RMIregistry port number:");
-      String portNum = br.readLine();
-      RMIPort = Integer.parseInt(portNum);
+      int RMIPort;
       String registryURL = 
         "rmi://localhost:" + portNum + "/callback";  
       // find the remote object and cast it to an 
@@ -379,7 +377,7 @@ public class VentaCliente extends javax.swing.JFrame {
       System.out.println(taboa.get("IBERDROLA"));
       h.alertaVenta("IBERDROLA", taboa.get("IBERDROLA") - 1.0, callbackObj);
       h.alertaCompra("VISCOFAN", taboa.get("VISCOFAN") + 1.0, callbackObj);
-      h.alertaVenta("NATURGY", taboa.get("NATURGY") - 1.0, callbackObj);
+      h.alertaVenta("NATURGY", taboa.get("NATURGY") - 1.5, callbackObj);
 //      try {
 //        Thread.sleep(time * 1000);
 //      }

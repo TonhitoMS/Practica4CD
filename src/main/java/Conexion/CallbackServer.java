@@ -51,44 +51,6 @@ public class CallbackServer  {
       System.out.println(
         "Exception in HelloServer.main: " + re);
     } // end catch
-//          Document doc = Jsoup.connect("https://www.bolsamadrid.es/esp/aspx/Mercados/Precios.aspx?indice=ESI100000000&punto=indice").get();
-//        //log(doc.title());
-//
-//        Element taboa = doc.select("table[id*=Acciones]").get(0);
-////        for (Element headline : newsHeadlines) {
-////            log("%s\n", headline.attr("tr"));
-////        }
-//
-//        NumberFormat format = NumberFormat.getInstance(Locale.FRANCE);
-//        Number number;
-//        double d;
-//
-//        HashMap<String, Double> valores = new HashMap();
-//        Elements filas = taboa.select("tr");
-//        Elements cols;
-//        for (int i = 1; i < filas.size(); i++) { //first row is the col names so skip it.
-//            Element fila = filas.get(i);
-//            cols = fila.select("td");
-//            number = format.parse(cols.get(1).text());
-//            d = number.doubleValue();
-//            valores.put(cols.get(0).text(), d);
-//            log("%s\n\t%s", cols.get(0).text(), cols.get(1).text());
-//        }
-//        
-//        SortedSet<String> keys = new TreeSet<>(valores.keySet());
-//        for(String s: keys){
-//            System.out.println(s);
-//        }
-//        System.out.println("PHARMA MAR:\t" + valores.get("PHARMA MAR"));
-        
-//        Timer timer = new Timer();
-//        
-//        timer.scheduleAtFixedRate(new TimerTask() {
-//            @Override
-//            public void run() {
-//                System.out.println("ola que tal");
-//            }
-//        }, 2*1000, 2*1000);
         
         System.out.println("ola");
         
