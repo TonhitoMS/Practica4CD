@@ -256,6 +256,8 @@ public class VentaCliente extends javax.swing.JFrame {
         
         txtEmpresa.setText("");
         txtValor.setText("");
+        VAviso va = new VAviso(this, true, "Alerta de compra rexistrada con éxito");
+        va.setVisible(true);
     }//GEN-LAST:event_btnCompraActionPerformed
 
     private void btnVentaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVentaActionPerformed
@@ -271,6 +273,8 @@ public class VentaCliente extends javax.swing.JFrame {
         }
         txtEmpresa.setText("");
         txtValor.setText("");
+        VAviso va = new VAviso(this, true, "Alerta de venta rexistrada con éxito");        
+        va.setVisible(true);
     }//GEN-LAST:event_btnVentaActionPerformed
 
     private void txtEmpresaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtEmpresaActionPerformed
