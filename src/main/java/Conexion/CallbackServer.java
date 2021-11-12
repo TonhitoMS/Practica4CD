@@ -14,6 +14,8 @@ import java.util.SortedSet;
 import java.util.Timer;
 import java.util.TimerTask;
 import java.util.TreeSet;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
@@ -46,6 +48,21 @@ public class CallbackServer  {
         "rmi://localhost:" + portNum + "/callback";
       Naming.rebind(registryURL, exportedObj);
       System.out.println("Callback Server ready.");
+      
+      Timer timer = new Timer();
+//        
+        timer.scheduleAtFixedRate(new TimerTask() {
+            @Override
+            public void run() {
+                
+                try {
+                    exportedObj.consultarTaboa();
+                } catch (RemoteException ex) {
+                    Logger.getLogger(CallbackServer.class.getName()).log(Level.SEVERE, null, ex);
+                }
+                
+            }
+        }, 0, 20*1000);
     }// end try
     catch (Exception re) {
       System.out.println(

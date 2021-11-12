@@ -99,15 +99,15 @@ public class CallbackServerImpl extends UnicastRemoteObject
                        "Server completed callbacks ---");
   } // doCallbacks
   
-  private synchronized void consultarTaboa()  throws RemoteException{
+  public synchronized void consultarTaboa()  throws RemoteException{
       HashMap<String, Double> result = new HashMap();
       CallbackServerImpl csi = this;
-        
-        Timer timer = new Timer();
-        
-        timer.scheduleAtFixedRate(new TimerTask() {
-            @Override
-            public void run() {
+//        
+//        Timer timer = new Timer();
+//        
+//        timer.scheduleAtFixedRate(new TimerTask() {
+//            @Override
+//            public void run() {
                 Document doc = null;
                 try{
                     doc = Jsoup.connect("https://www.bolsamadrid.es/esp/aspx/Mercados/Precios.aspx?indice=ESI100000000&punto=indice").get();
@@ -142,8 +142,8 @@ public class CallbackServerImpl extends UnicastRemoteObject
                     Logger.getLogger(CallbackServerImpl.class.getName()).log(Level.SEVERE, null, ex);
                 }
                 csi.taboa=result;
-            }
-        }, 0, 20*1000);
+//            }
+//        }, 0, 20*1000);
         
         this.taboa = result;
    }
