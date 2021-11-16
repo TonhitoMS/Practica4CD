@@ -54,7 +54,7 @@ public class CallbackServerImpl extends UnicastRemoteObject
       Cliente c = new Cliente(callbackClientObject);
       if (!(clientList.contains(c))) {
          clientList.add(c);
-      System.out.println("Registered new client ");
+      System.out.println("Novo cliente rexistrado");
       doCallbacks();
     } // end if
   }  
@@ -188,30 +188,30 @@ public class CallbackServerImpl extends UnicastRemoteObject
     private synchronized void notificarAlertas() throws RemoteException{
         //alerta de compra
         System.out.println("notificarAlertas");
-        for(Cliente c: this.clientList){
-//            for(Map.Entry<String, Double> m: c.getBaixa().entrySet()){
-//                String empresa = m.getKey();
-//                double umbral = m.getValue();
-//                if(taboa.get(empresa) < umbral){
-//                    CallbackClientInterface nextClient = 
-//                        (CallbackClientInterface)c.getCallbackClientObject();
-//                    nextClient.notifyMe("Alerta de compra. O valor da empresa " + empresa + " baixou do " + umbral);
-//                    c.getBaixa().remove(empresa);
-//                }
-//            }
-                Iterator<Map.Entry<String, Double>> it = c.getBaixa().entrySet().iterator();
-                while (it.hasNext()) {
-                    Map.Entry<String, Double> m = it.next();
-                    String empresa = m.getKey();
-                    double umbral = m.getValue();
-                    if(taboa.get(empresa) < umbral){
-                        CallbackClientInterface nextClient = 
-                            (CallbackClientInterface)c.getCallbackClientObject();
-                    System.out.println(nextClient.notifyMe("Alerta de compra. O valor da empresa " + empresa + " baixou do " + umbral));
-                        it.remove();
-                    }
-                }
-        }
+//        for(Cliente c: this.clientList){
+////            for(Map.Entry<String, Double> m: c.getBaixa().entrySet()){
+////                String empresa = m.getKey();
+////                double umbral = m.getValue();
+////                if(taboa.get(empresa) < umbral){
+////                    CallbackClientInterface nextClient = 
+////                        (CallbackClientInterface)c.getCallbackClientObject();
+////                    nextClient.notifyMe("Alerta de compra. O valor da empresa " + empresa + " baixou do " + umbral);
+////                    c.getBaixa().remove(empresa);
+////                }
+////            }
+////                Iterator<Map.Entry<String, Double>> it = c.getBaixa().entrySet().iterator();
+////                while (it.hasNext()) {
+////                    Map.Entry<String, Double> m = it.next();
+////                    String empresa = m.getKey();
+////                    double umbral = m.getValue();
+////                    if(taboa.get(empresa) < umbral){
+////                        CallbackClientInterface nextClient = 
+////                            (CallbackClientInterface)c.getCallbackClientObject();
+////                    System.out.println(nextClient.notifyMe("Alerta de compra. O valor da empresa " + empresa + " baixou do " + umbral));
+////                        it.remove();
+////                    }
+////                }
+//        }
         
         //alerta de venta
         for(Cliente c: this.clientList){
@@ -234,6 +234,19 @@ public class CallbackServerImpl extends UnicastRemoteObject
                         CallbackClientInterface nextClient = 
                             (CallbackClientInterface)c.getCallbackClientObject();
                         System.out.println(nextClient.notifyMe("Alerta de venta. O valor da empresa " + empresa + " subiu do " + umbral));
+                        it.remove();
+                    }
+                }
+                
+                it = c.getBaixa().entrySet().iterator();
+                while (it.hasNext()) {
+                    Map.Entry<String, Double> m = it.next();
+                    String empresa = m.getKey();
+                    double umbral = m.getValue();
+                    if(taboa.get(empresa) < umbral){
+                        CallbackClientInterface nextClient = 
+                            (CallbackClientInterface)c.getCallbackClientObject();
+                    System.out.println(nextClient.notifyMe("Alerta de compra. O valor da empresa " + empresa + " baixou do " + umbral));
                         it.remove();
                     }
                 }

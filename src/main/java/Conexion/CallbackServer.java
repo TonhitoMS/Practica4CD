@@ -42,12 +42,22 @@ public class CallbackServer  {
       portNum = (br.readLine()).trim();
       int RMIPortNum = Integer.parseInt(portNum);
       startRegistry(RMIPortNum);
+      String ip;
+    try(final DatagramSocket socket = new DatagramSocket()){
+        socket.connect(InetAddress.getByName("8.8.8.8"), 10002);
+        ip = socket.getLocalAddress().getHostAddress();
+    }
+
       CallbackServerImpl exportedObj = 
         new CallbackServerImpl();
+        Process proc = Runtime.getRuntime().exec("hostname"); 
+        is = new InputStreamReader( proc.getInputStream() );
+        br = new BufferedReader(is);
+        String host = (br.readLine()).trim();
       registryURL = 
-        "rmi://localhost:" + portNum + "/callback";
+        "rmi://" + ip + ":" + portNum + "/callback";
       Naming.rebind(registryURL, exportedObj);
-      System.out.println("Callback Server ready.");
+      System.out.println("Callback Server ready. registry URL: " + registryURL);
       
       Timer timer = new Timer();
 //        

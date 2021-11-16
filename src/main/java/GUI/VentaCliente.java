@@ -11,7 +11,11 @@ import java.rmi.RemoteException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
+import java.util.Map;
 import java.util.Set;
+import java.util.SortedSet;
+import java.util.TreeMap;
+import java.util.TreeSet;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JTextArea;
@@ -21,7 +25,7 @@ import javax.swing.JTextArea;
  * @author antonio
  */
 public class VentaCliente extends javax.swing.JFrame {
-    private CallbackClientInterface cbi;
+    private CallbackClientInterface cci;
     private CallbackServerInterface csi;
         
     /**
@@ -54,7 +58,6 @@ public class VentaCliente extends javax.swing.JFrame {
         jTable1 = new javax.swing.JTable();
         jScrollPane2 = new javax.swing.JScrollPane();
         taboa = new javax.swing.JTable();
-        bntAct = new javax.swing.JButton();
         btnCompra = new javax.swing.JButton();
         btnVenta = new javax.swing.JButton();
         txtEmpresa = new javax.swing.JTextField();
@@ -79,6 +82,7 @@ public class VentaCliente extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Ventá Cliente");
+        setResizable(false);
         addWindowListener(new java.awt.event.WindowAdapter() {
             public void windowClosed(java.awt.event.WindowEvent evt) {
                 formWindowClosed(evt);
@@ -96,13 +100,6 @@ public class VentaCliente extends javax.swing.JFrame {
             }
         });
         jScrollPane2.setViewportView(taboa);
-
-        bntAct.setText("Actualizar");
-        bntAct.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                bntActActionPerformed(evt);
-            }
-        });
 
         btnCompra.setText("Alerta de Compra");
         btnCompra.addActionListener(new java.awt.event.ActionListener() {
@@ -138,41 +135,30 @@ public class VentaCliente extends javax.swing.JFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
+                .addGap(61, 61, 61)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addGap(35, 35, 35)
-                        .addComponent(bntAct)
-                        .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(61, 61, 61)
-                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(btnCompra)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(btnVenta))
+                    .addComponent(jScrollPane3, javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addGap(0, 140, Short.MAX_VALUE)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addComponent(btnCompra)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                        .addComponent(btnVenta))
-                                    .addComponent(jScrollPane3, javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                        .addGap(0, 140, Short.MAX_VALUE)
-                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                                .addComponent(txtEmpresa, javax.swing.GroupLayout.PREFERRED_SIZE, 262, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                .addGap(135, 135, 135))
-                                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                                .addComponent(jLabel1)
-                                                .addGap(235, 235, 235))))))
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                        .addComponent(txtValor, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addGap(204, 204, 204))
-                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                        .addComponent(jLabel2)
-                                        .addGap(239, 239, 239)))))))
+                                .addComponent(txtEmpresa, javax.swing.GroupLayout.PREFERRED_SIZE, 262, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(135, 135, 135))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                .addComponent(jLabel1)
+                                .addGap(235, 235, 235))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                .addComponent(txtValor, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(204, 204, 204))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                .addComponent(jLabel2)
+                                .addGap(239, 239, 239)))))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -196,7 +182,6 @@ public class VentaCliente extends javax.swing.JFrame {
                         .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(bntAct)
                             .addComponent(btnVenta)
                             .addComponent(btnCompra))
                         .addContainerGap())))
@@ -206,26 +191,10 @@ public class VentaCliente extends javax.swing.JFrame {
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
-    private void bntActActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bntActActionPerformed
-        // TODO add your handling code here:
-        HashMap<String, Double> taboa = null;
-        try {
-            taboa = csi.getTaboa();
-        } catch (RemoteException ex) {
-            Logger.getLogger(VentaCliente.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        Set<String> empresas = taboa.keySet();
-        Collection<Double> valores = taboa.values();
-        ArrayList<String> AEmpresas = new ArrayList(empresas);
-        ArrayList<Double> AValores = new ArrayList(valores);
-        this.mostrarTaboa(AEmpresas, AValores);
-        System.out.println("táboa actualizada");
-    }//GEN-LAST:event_bntActActionPerformed
-
     private void formWindowClosed(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosed
         try {
             // TODO add your handling code here:
-            csi.unregisterForCallback(cbi);
+            csi.unregisterForCallback(cci);
         } catch (RemoteException ex) {
             Logger.getLogger(VentaCliente.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -236,7 +205,7 @@ public class VentaCliente extends javax.swing.JFrame {
         // TODO add your handling code here:
         try {
             // TODO add your handling code here:
-            csi.unregisterForCallback(cbi);
+            csi.unregisterForCallback(cci);
         } catch (RemoteException ex) {
             Logger.getLogger(VentaCliente.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -245,11 +214,15 @@ public class VentaCliente extends javax.swing.JFrame {
 
     private void btnCompraActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCompraActionPerformed
         // TODO add your handling code here:
+        Rexistro();
+      
+        
+//        System.out.println("Registered for callback.");
         ModeloTaboa m;
         m = (ModeloTaboa) taboa.getModel();
         double d = Double.parseDouble(txtValor.getText());
         try {
-            csi.alertaCompra(txtEmpresa.getText(), d, cbi);
+            csi.alertaCompra(txtEmpresa.getText(), d, cci);
         } catch (RemoteException ex) {
             Logger.getLogger(VentaCliente.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -262,12 +235,15 @@ public class VentaCliente extends javax.swing.JFrame {
 
     private void btnVentaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVentaActionPerformed
         // TODO add your handling code here:
+        
+        Rexistro();
+//        System.out.println("Registered for callback.");
         ModeloTaboa m;
 
         m = (ModeloTaboa) taboa.getModel();
         double d = Double.parseDouble(txtValor.getText());
         try {
-            csi.alertaVenta(txtEmpresa.getText(), d, cbi);
+            csi.alertaVenta(txtEmpresa.getText(), d, cci);
         } catch (RemoteException ex) {
             Logger.getLogger(VentaCliente.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -329,7 +305,6 @@ public class VentaCliente extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton bntAct;
     private javax.swing.JButton btnCompra;
     private javax.swing.JButton btnVenta;
     private javax.swing.JLabel jLabel1;
@@ -359,45 +334,54 @@ public class VentaCliente extends javax.swing.JFrame {
         try {
       int RMIPort;
       String registryURL = 
-        "rmi://localhost:" + portNum + "/callback";  
+        "rmi://" + hostNum + ":" + portNum + "/callback";  
       // find the remote object and cast it to an 
       //   interface object
-      CallbackServerInterface h =
+      this.csi =
         (CallbackServerInterface)Naming.lookup(registryURL);
       System.out.println("Lookup completed " );
-      System.out.println("Server said " + h.sayHello());
-      HashMap<String, Double> taboa = h.getTaboa();
+      System.out.println("Server said " + this.csi.sayHello());
+      HashMap<String, Double> taboa = this.csi.getTaboa();
       Set<String> empresas = taboa.keySet();
       Collection<Double> valores = taboa.values();
-      ArrayList<String> AEmpresas = new ArrayList(empresas);
-      ArrayList<Double> AValores = new ArrayList(valores);
+        Map<String, Double> listaOrdenada = new TreeMap<>(taboa);
+        ArrayList<String> AEmpresas = new ArrayList(listaOrdenada.keySet());
+        ArrayList<Double> AValores = new ArrayList(listaOrdenada.values());
       this.mostrarTaboa(AEmpresas, AValores);
-      System.out.println("*****************IBEX35*****************\n" + h.getTaboa());
-      CallbackClientInterface callbackObj = 
-        new CallbackClientImpl(this);
-      // register for callback
-      h.registerForCallback(callbackObj);
-      System.out.println("Registered for callback.");
-      System.out.println(taboa.get("IBERDROLA"));
-      h.alertaVenta("IBERDROLA", taboa.get("IBERDROLA") - 1.0, callbackObj);
-      h.alertaCompra("VISCOFAN", taboa.get("VISCOFAN") + 1.0, callbackObj);
-      h.alertaVenta("NATURGY", taboa.get("NATURGY") - 1.5, callbackObj);
-//      try {
+//      System.out.println("*****************IBEX35*****************\n" + h.getTaboa());
+        this.cci = new CallbackClientImpl(this);
+//      // register for callback
+//        csi.registerForCallback(cci);
+//      System.out.println("Registered for callback.");
+//      System.out.println(taboa.get("IBERDROLA"));
+//      h.alertaVenta("IBERDROLA", taboa.get("IBERDROLA") - 1.0, callbackObj);
+//      h.alertaCompra("VISCOFAN", taboa.get("VISCOFAN") + 1.0, callbackObj);
+//      h.alertaVenta("NATURGY", taboa.get("NATURGY") - 1.5, callbackObj);
+////      try {
 //        Thread.sleep(time * 1000);
 //      }
 //      catch (InterruptedException ex){ // sleep over
 //      }
       //locawhile(i == 0){}
       //h.unregisterForCallback(callbackObj);
-      this.cbi = callbackObj;
-      this.csi = h;
+      
+      
       //System.out.println("Unregistered for callback.");
-    } // end try 
+    } // end try  // end try 
     catch (Exception e) {
       System.out.println(
         "Exception in CallbackClient: " + e);
     } // end catch
     }
 
+    
+    private void Rexistro(){
+        try {
+            // register for callback
+            csi.registerForCallback(this.cci);
+        } catch (RemoteException ex) {
+            System.out.println("Excepción: " + ex);
+        }
+    }
 
 }
